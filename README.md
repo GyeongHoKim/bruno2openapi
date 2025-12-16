@@ -1,6 +1,6 @@
 # Bruno to OpenAPI
 
-Convert Bruno collections to OpenAPI specifications with ease. This library provides a simple way to transform Bruno collection JSON files into standardized OpenAPI 3.x specifications.
+Convert Bruno collections to OpenAPI specifications with ease. This library provides a simple way to transform Bruno collection directories into standardized OpenAPI 3.x specifications.
 
 ## Installation
 
@@ -14,24 +14,25 @@ npm install @gyeonghokim/bruno-to-openapi
 
 Once installed, you can use the library to convert your Bruno collections to OpenAPI specifications. Below are examples showing how to export to both JSON and YAML formats.
 
-### JSON Export
+### JSON Export (Async)
 
 ```javascript
-import { convertBrunoToOpenAPI } from '@gyeonghokim/bruno-to-openapi';
+import { convertBrunoCollectionToOpenAPI } from '@gyeonghokim/bruno-to-openapi';
 import fs from 'fs';
 
-// Load your Bruno collection JSON file
-import brunoCollection from './path-to-your-bruno-collection.json';
+async function convertCollection() {
+  // Convert Bruno collection directory to OpenAPI specification
+  const result = await convertBrunoCollectionToOpenAPI('./path-to-your-bruno-collection-directory');
 
-// Convert Bruno collection to OpenAPI specification
-const openApiSpec = convertBrunoToOpenAPI(brunoCollection);
+  // Save as JSON file
+  fs.writeFileSync('openapi-spec.json', JSON.stringify(result.openapi, null, 2));
+  console.log('OpenAPI specification saved as openapi-spec.json');
+}
 
-// Save as JSON file
-fs.writeFileSync('openapi-spec.json', JSON.stringify(openApiSpec, null, 2));
-console.log('OpenAPI specification saved as openapi-spec.json');
+convertCollection();
 ```
 
-### YAML Export
+### YAML Export (Async)
 
 To export as YAML, you can use the `js-yaml` library along with this package:
 
@@ -40,20 +41,21 @@ npm install js-yaml
 ```
 
 ```javascript
-import { convertBrunoToOpenAPI } from '@gyeonghokim/bruno-to-openapi';
+import { convertBrunoCollectionToOpenAPI } from '@gyeonghokim/bruno-to-openapi';
 import yaml from 'js-yaml';
 import fs from 'fs';
 
-// Load your Bruno collection JSON file
-import brunoCollection from './path-to-your-bruno-collection.json';
+async function convertCollection() {
+  // Convert Bruno collection directory to OpenAPI specification
+  const result = await convertBrunoCollectionToOpenAPI('./path-to-your-bruno-collection-directory');
 
-// Convert Bruno collection to OpenAPI specification
-const openApiSpec = convertBrunoToOpenAPI(brunoCollection);
+  // Convert to YAML and save
+  const yamlString = yaml.dump(result.openapi, { indent: 2 });
+  fs.writeFileSync('openapi-spec.yaml', yamlString);
+  console.log('OpenAPI specification saved as openapi-spec.yaml');
+}
 
-// Convert to YAML and save
-const yamlString = yaml.dump(openApiSpec, { indent: 2 });
-fs.writeFileSync('openapi-spec.yaml', yamlString);
-console.log('OpenAPI specification saved as openapi-spec.yaml');
+convertCollection();
 ```
 
 ## Features
@@ -64,12 +66,16 @@ console.log('OpenAPI specification saved as openapi-spec.yaml');
 - Preserves request/response examples
 - Maintains folder structures as tags
 - Supports both JSON and YAML output formats
+- Provides synchronous and asynchronous conversion options
+- Includes collection validation utilities
 
 ## API Reference
 
-The library exports a single function:
+The library exports the following functions:
 
-- `convertBrunoToOpenAPI(brunoCollection)`: Takes a Bruno collection object and returns an OpenAPI specification object.
+- `convertBrunoCollectionToOpenAPI(collectionPath)`: Asynchronously takes a Bruno collection directory path and returns a Promise resolving to the conversion result containing the OpenAPI specification.
+- `convertBrunoCollectionToAPISync(collectionPath)`: Synchronously takes a Bruno collection directory path and returns the conversion result containing the OpenAPI specification (Note: The full synchronous implementation has limitations and it's recommended to use the async version).
+- `isValidBrunoCollection(collectionPath)`: Asynchronously validates if a given path contains a valid Bruno collection and returns a Promise resolving to true if valid.
 
 ## Contributing
 
