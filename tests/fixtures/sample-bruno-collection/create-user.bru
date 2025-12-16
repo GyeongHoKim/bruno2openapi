@@ -1,0 +1,16 @@
+[meta]
+name=Create User
+type=http-request
+seq=2
+
+[request]
+method=POST
+url=https://api.example.com/users
+
+[headers]
+Content-Type=application/json
+Authorization=Bearer {{token}}
+
+[body]
+mode=json
+json={"name": "John Doe", "email": "john@example.com"}

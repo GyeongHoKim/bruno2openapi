@@ -1,0 +1,16 @@
+[meta]
+name=Get Users
+type=http-request
+seq=1
+
+[request]
+method=GET
+url=https://api.example.com/users
+
+[headers]
+Content-Type=application/json
+Authorization=Bearer {{token}}
+
+[params]
+limit=10
+offset=0
