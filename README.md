@@ -17,7 +17,7 @@ Once installed, you can use the library to convert your Bruno collections to Ope
 ### JSON Export
 
 ```javascript
-import { convertBrunoToOpenAPI } from 'bruno-to-openapi';
+import { convertBrunoToOpenAPI } from '@gyeonghokim/bruno-to-openapi';
 import fs from 'fs';
 
 // Load your Bruno collection JSON file
@@ -40,7 +40,7 @@ npm install js-yaml
 ```
 
 ```javascript
-import { convertBrunoToOpenAPI } from 'bruno-to-openapi';
+import { convertBrunoToOpenAPI } from '@gyeonghokim/bruno-to-openapi';
 import yaml from 'js-yaml';
 import fs from 'fs';
 
