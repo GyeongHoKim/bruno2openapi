@@ -1,0 +1,45 @@
+{
+  "name": "@gyeonghokim/bruno-to-openapi",
+  "version": "0.0.0",
+  "description": "Convert Bruno API collections to OpenAPI 3.0 specification",
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "lint:fix": "biome check --apply .",
+    "format": "biome format .",
+    "format:write": "biome format --write .",
+    "typecheck": "npm run typecheck:app && npm run typecheck:test",
+    "typecheck:app": "tsc --noEmit",
+    "typecheck:test": "tsc --noEmit -p tsconfig.test.json"
+  },
+  "keywords": [
+    "bruno",
+    "openapi",
+    "api",
+    "specification",
+    "converter"
+  ],
+  "author": "GyeongHo Kim",
+  "license": "MIT",
+  "devDependencies": {
+    "@apidevtools/swagger-parser": "^12.1.0",
+    "@biomejs/biome": "^1.0.0",
+    "@types/node": "^18.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
