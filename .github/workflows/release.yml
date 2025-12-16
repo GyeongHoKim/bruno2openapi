@@ -18,7 +18,7 @@ jobs:
       id-token: write # to enable use of OIDC for trusted publishing and npm provenance
     steps:
       - name: Update npm
-        run: npm -g 
+        run: npm install -g npm@latest
       - name: Checkout
         uses: actions/checkout@v4
         with:
