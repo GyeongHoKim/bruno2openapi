@@ -32,40 +32,15 @@ export async function convertBrunoCollectionToOpenAPI(
  */
 export function convertBrunoCollectionToOpenAPISync(collectionPath: string): ConvertResult {
   try {
-    // For a true synchronous implementation, we would need to implement sync versions
-    // of our file operations. For now, we'll use require instead of import to avoid
-    // top-level await issues, but note that this is still using async operations
-    // which cannot truly be made synchronous without blocking the event loop.
-    // A proper sync implementation would require refactoring our file readers to
-    // have both sync and async versions.
+    // Parse the Bruno collection synchronously
+    const collection = BrunoParser.parseCollectionSync(collectionPath)
 
-    // For now, we'll implement a simplified sync version by reading files directly
-    const fs = require('node:fs')
-    const pathModule = require('node:path')
+    // Generate the OpenAPI specification
+    const result = OpenApiGenerator.generateOpenApiSpec(collection)
 
-    // Check if it's a valid collection first
-    if (!(fs.existsSync(collectionPath) && fs.statSync(collectionPath).isDirectory())) {
-      throw new Error(`Collection path does not exist or is not a directory: ${collectionPath}`)
-    }
-
-    // Look for bruno.json
-    const brunoJsonPath = pathModule.join(collectionPath, 'bruno.json')
-    let brunoConfig = null
-    if (fs.existsSync(brunoJsonPath)) {
-      const brunoJsonContent = fs.readFileSync(brunoJsonPath, 'utf-8')
-      brunoConfig = JSON.parse(brunoJsonContent)
-    }
-
-    // Since the full synchronous implementation requires significant changes
-    // to support sync file operations throughout the pipeline, we'll throw
-    // an error indicating that for full sync functionality, async should be used
-    throw new Error(
-      'Full synchronous conversion requires significant architectural changes to support sync file operations throughout the pipeline. Please use the async version: convertBrunoCollectionToOpenAPI()',
-    )
+    return result
   } catch (error) {
-    throw new Error(
-      `Failed to convert Bruno collection to OpenAPI synchronously: ${(error as Error).message}`,
-    )
+    throw new Error(`Failed to convert Bruno collection to OpenAPI: ${(error as Error).message}`)
   }
 }
 

@@ -11,6 +11,7 @@ import { OpenApiGenerator } from '../../src/utils/openapi-generator.js'
 vi.mock('../../src/utils/bruno-parser.js', () => ({
   BrunoParser: {
     parseCollection: vi.fn(),
+    parseCollectionSync: vi.fn(),
     isValidCollection: vi.fn(),
   },
 }))
@@ -98,9 +99,46 @@ describe('index.ts functions', () => {
   })
 
   describe('convertBrunoCollectionToOpenAPISync', () => {
-    it('should throw an error for sync conversion', () => {
+    it('should convert a Bruno collection to OpenAPI synchronously', () => {
+      const mockCollection = {
+        name: 'Test Collection',
+        version: '1' as const,
+        items: [],
+        uid: 'test-uid',
+        pathname: '/test/path',
+      }
+
+      const mockResult = {
+        spec: {
+          openapi: '3.0.0' as const,
+          info: { title: 'Test', version: '1.0.0' },
+          paths: {},
+        },
+        warnings: [],
+        content: JSON.stringify({
+          openapi: '3.0.0',
+          info: { title: 'Test', version: '1.0.0' },
+          paths: {},
+        }),
+      }
+
+      vi.mocked(BrunoParser.parseCollectionSync).mockReturnValue(mockCollection)
+      vi.mocked(OpenApiGenerator.generateOpenApiSpec).mockReturnValue(mockResult)
+
+      const result = convertBrunoCollectionToOpenAPISync('/test/collection')
+
+      expect(BrunoParser.parseCollectionSync).toHaveBeenCalledWith('/test/collection')
+      expect(OpenApiGenerator.generateOpenApiSpec).toHaveBeenCalledWith(mockCollection)
+      expect(result).toEqual(mockResult)
+    })
+
+    it('should throw an error when collection parsing fails synchronously', () => {
+      vi.mocked(BrunoParser.parseCollectionSync).mockImplementation(() => {
+        throw new Error('Parse error')
+      })
+
       expect(() => convertBrunoCollectionToOpenAPISync('/test/collection')).toThrow(
-        'Collection path does not exist or is not a directory: /test/collection',
+        'Failed to convert Bruno collection to OpenAPI: Parse error',
       )
     })
   })

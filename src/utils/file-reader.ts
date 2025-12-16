@@ -1,3 +1,4 @@
+import fsSync from 'node:fs'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
@@ -106,5 +107,93 @@ export class FileReader {
     }
 
     return resolved
+  }
+
+  /**
+   * Reads a file synchronously and returns its content as a string
+   */
+  static readFileSync(filePath: string): string {
+    try {
+      // Validate file path to prevent path traversal attacks
+      const resolvedPath = path.resolve(filePath)
+      if (!(resolvedPath.startsWith(path.resolve('.')) || resolvedPath.startsWith(process.cwd()))) {
+        throw new Error('Invalid file path: path traversal detected')
+      }
+
+      return fsSync.readFileSync(filePath, 'utf-8')
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+        throw new Error(`File does not exist: ${filePath}`)
+      }
+      if ((error as NodeJS.ErrnoException).code === 'EACCES') {
+        throw new Error(`Access denied reading file: ${filePath}`)
+      }
+      throw new Error(`Failed to read file ${filePath}: ${(error as Error).message}`)
+    }
+  }
+
+  /**
+   * Checks if a file exists synchronously
+   */
+  static fileExistsSync(filePath: string): boolean {
+    try {
+      fsSync.accessSync(filePath)
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  /**
+   * Checks if a path is a directory synchronously
+   */
+  static isDirectorySync(dirPath: string): boolean {
+    try {
+      const stats = fsSync.statSync(dirPath)
+      return stats.isDirectory()
+    } catch {
+      return false
+    }
+  }
+
+  /**
+   * Reads all files in a directory recursively synchronously
+   */
+  static readDirRecursivelySync(dirPath: string): string[] {
+    try {
+      const entries = fsSync.readdirSync(dirPath, { withFileTypes: true })
+      const files: string[] = []
+
+      for (const entry of entries) {
+        // Prevent symbolic link loops and other path issues
+        const fullPath = path.resolve(dirPath, entry.name)
+        if (entry.isDirectory()) {
+          const nestedFiles = FileReader.readDirRecursivelySync(fullPath)
+          files.push(...nestedFiles)
+        } else {
+          files.push(fullPath)
+        }
+      }
+
+      return files
+    } catch (error) {
+      throw new Error(`Failed to read directory ${dirPath}: ${(error as Error).message}`)
+    }
+  }
+
+  /**
+   * Gets all JSON files in a directory synchronously
+   */
+  static getJsonFilesSync(dirPath: string): string[] {
+    const files = FileReader.readDirRecursivelySync(dirPath)
+    return files.filter(file => path.extname(file) === '.json')
+  }
+
+  /**
+   * Gets all .bru files in a directory synchronously
+   */
+  static getBruFilesSync(dirPath: string): string[] {
+    const files = FileReader.readDirRecursivelySync(dirPath)
+    return files.filter(file => path.extname(file) === '.bru')
   }
 }
