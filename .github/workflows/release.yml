@@ -11,6 +11,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       contents: write # to be able to publish a GitHub release
       issues: write # to be able to comment on released issues
