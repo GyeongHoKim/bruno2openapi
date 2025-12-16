@@ -32,10 +32,6 @@ coverage/
 tmp/
 temp/
 
-# Production build
-dist/
-build/
-
 # IDE files
 .vscode/
 .idea/
