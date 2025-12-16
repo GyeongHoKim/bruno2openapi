@@ -11,8 +11,8 @@ import type {
   BrunoRequest,
   BrunoVariable,
   FolderRoot,
-} from '../types/bruno'
-import { FileReader } from './file-reader'
+} from '../types/bruno.js'
+import { FileReader } from './file-reader.js'
 
 /**
  * Utility functions for parsing Bruno collection structures

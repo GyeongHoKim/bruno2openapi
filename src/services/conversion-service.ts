@@ -1,6 +1,6 @@
-import type { BrunoCollection } from '../types/bruno'
-import type { ConvertResult } from '../types/result'
-import { OpenApiGenerator } from '../utils/openapi-generator'
+import type { BrunoCollection } from '../types/bruno.js'
+import type { ConvertResult } from '../types/result.js'
+import { OpenApiGenerator } from '../utils/openapi-generator.js'
 
 /**
  * Interface for the conversion service

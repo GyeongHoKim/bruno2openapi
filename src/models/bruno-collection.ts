@@ -4,7 +4,7 @@ import type {
   BrunoItem,
   FolderRoot,
   RunnerResult,
-} from '../types'
+} from '../types/index.js'
 
 /**
  * Data model representing a Bruno collection

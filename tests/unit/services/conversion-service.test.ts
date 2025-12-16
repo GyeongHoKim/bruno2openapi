@@ -1,7 +1,7 @@
-import * as OpenApiParser from '@apidevtools/swagger-parser'
+import SwaggerParser from '@apidevtools/swagger-parser'
 import { describe, expect, it } from 'vitest'
-import { ConversionService } from '../../../src/services/conversion-service'
-import type { BrunoCollection } from '../../../src/types/bruno'
+import { ConversionService } from '../../../src/services/conversion-service.js'
+import type { BrunoCollection } from '../../../src/types/bruno.js'
 
 describe('ConversionService', () => {
   const service = new ConversionService()
@@ -40,7 +40,7 @@ describe('ConversionService', () => {
       // Validate the spec with external library
       try {
         // biome-ignore lint/suspicious/noExplicitAny: External library type incompatibility
-        await OpenApiParser.validate(result.spec as any)
+        await SwaggerParser.validate(result.spec as any)
         expect(true).toBe(true) // If validation doesn't throw, it's valid
       } catch (error) {
         console.error('OpenAPI validation failed:', error)
@@ -108,7 +108,7 @@ describe('ConversionService', () => {
       // Validate with external library
       try {
         // biome-ignore lint/suspicious/noExplicitAny: External library type incompatibility
-        await OpenApiParser.validate(result.spec as any)
+        await SwaggerParser.validate(result.spec as any)
         expect(true).toBe(true) // If validation doesn't throw, it's valid
       } catch (error) {
         // If validation fails, provide more detailed error info
@@ -144,7 +144,7 @@ describe('ConversionService', () => {
       // Validate the spec
       try {
         // biome-ignore lint/suspicious/noExplicitAny: External library type incompatibility
-        await OpenApiParser.validate(result.spec as any)
+        await SwaggerParser.validate(result.spec as any)
         expect(true).toBe(true) // If validation doesn't throw, it's valid
       } catch (error) {
         console.error('OpenAPI validation failed:', error)
@@ -174,7 +174,7 @@ describe('ConversionService', () => {
       // Validate the spec
       try {
         // biome-ignore lint/suspicious/noExplicitAny: External library type incompatibility
-        await OpenApiParser.validate(result.spec as any)
+        await SwaggerParser.validate(result.spec as any)
         expect(true).toBe(true) // If validation doesn't throw, it's valid
       } catch (error) {
         console.error('OpenAPI validation failed:', error)
@@ -245,7 +245,7 @@ describe('ConversionService', () => {
       // Validate the spec
       try {
         // biome-ignore lint/suspicious/noExplicitAny: External library type incompatibility
-        await OpenApiParser.validate(result.spec as any)
+        await SwaggerParser.validate(result.spec as any)
         expect(true).toBe(true) // If validation doesn't throw, it's valid
       } catch (error) {
         console.error('OpenAPI validation failed:', error)
@@ -277,7 +277,7 @@ describe('ConversionService', () => {
       // Validate the spec
       try {
         // biome-ignore lint/suspicious/noExplicitAny: External library type incompatibility
-        await OpenApiParser.validate(result.spec as any)
+        await SwaggerParser.validate(result.spec as any)
         expect(true).toBe(true) // If validation doesn't throw, it's valid
       } catch (error) {
         console.error('Async OpenAPI validation failed:', error)

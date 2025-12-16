@@ -1,6 +1,6 @@
-import type { ConvertResult } from './types/result'
-import { BrunoParser } from './utils/bruno-parser'
-import { OpenApiGenerator } from './utils/openapi-generator'
+import type { ConvertResult } from './types/result.js'
+import { BrunoParser } from './utils/bruno-parser.js'
+import { OpenApiGenerator } from './utils/openapi-generator.js'
 
 /**
  * Converts a Bruno collection to an OpenAPI 3.0 specification
@@ -94,6 +94,6 @@ export type {
   ResponseObject,
   ResponsesObject,
   SchemaObject,
-} from './types/openapi'
+} from './types/openapi.js'
 // Export other types for convenience
-export type { ConvertResult, ConvertWarning } from './types/result'
+export type { ConvertResult, ConvertWarning } from './types/result.js'

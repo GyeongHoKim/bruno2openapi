@@ -3,19 +3,19 @@ import {
   convertBrunoCollectionToOpenAPI,
   convertBrunoCollectionToOpenAPISync,
   isValidBrunoCollection,
-} from '../../src/index'
-import { BrunoParser } from '../../src/utils/bruno-parser'
-import { OpenApiGenerator } from '../../src/utils/openapi-generator'
+} from '../../src/index.js'
+import { BrunoParser } from '../../src/utils/bruno-parser.js'
+import { OpenApiGenerator } from '../../src/utils/openapi-generator.js'
 
 // Mock the utility classes
-vi.mock('../../src/utils/bruno-parser', () => ({
+vi.mock('../../src/utils/bruno-parser.js', () => ({
   BrunoParser: {
     parseCollection: vi.fn(),
     isValidCollection: vi.fn(),
   },
 }))
 
-vi.mock('../../src/utils/openapi-generator', () => ({
+vi.mock('../../src/utils/openapi-generator.js', () => ({
   OpenApiGenerator: {
     generateOpenApiSpec: vi.fn(),
   },

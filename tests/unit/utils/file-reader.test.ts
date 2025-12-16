@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { FileReader } from '../../../src/utils/file-reader'
+import { FileReader } from '../../../src/utils/file-reader.js'
 
 vi.mock('node:fs/promises', () => ({
   default: {

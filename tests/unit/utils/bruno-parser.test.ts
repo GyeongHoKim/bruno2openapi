@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { BrunoParser } from '../../../src/utils/bruno-parser'
-import { FileReader } from '../../../src/utils/file-reader'
+import { BrunoParser } from '../../../src/utils/bruno-parser.js'
+import { FileReader } from '../../../src/utils/file-reader.js'
 
 // Mock the FileReader
-vi.mock('../../../src/utils/file-reader', () => ({
+vi.mock('../../../src/utils/file-reader.js', () => ({
   FileReader: {
     isDirectory: vi.fn(),
     fileExists: vi.fn(),

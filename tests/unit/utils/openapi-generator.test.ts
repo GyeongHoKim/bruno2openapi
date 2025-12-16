@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { OpenApiGenerator } from '../../../src/utils/openapi-generator'
+import { OpenApiGenerator } from '../../../src/utils/openapi-generator.js'
 
 describe('OpenApiGenerator', () => {
   describe('generateOpenApiSpec', () => {

@@ -1,7 +1,7 @@
 // Type definitions for conversion result
 // Based on the contract specifications
 
-import type { OpenAPIObject } from './openapi'
+import type { OpenAPIObject } from './openapi.js'
 
 export interface ConvertResult {
   /**

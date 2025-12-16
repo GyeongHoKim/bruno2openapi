@@ -6,7 +6,7 @@ import type {
   BrunoItem,
   BrunoParam,
   BrunoRequest,
-} from '../types/bruno'
+} from '../types/bruno.js'
 import type {
   InfoObject,
   MediaTypeObject,
@@ -19,8 +19,8 @@ import type {
   ResponseObject,
   ResponsesObject,
   SchemaObject,
-} from '../types/openapi'
-import type { ConvertResult, ConvertWarning } from '../types/result'
+} from '../types/openapi.js'
+import type { ConvertResult, ConvertWarning } from '../types/result.js'
 
 /**
  * Utility functions for generating OpenAPI specifications
