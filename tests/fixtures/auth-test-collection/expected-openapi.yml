@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  title: auth-test-collection
+  version: 1.0.0
+  description: 'OpenAPI specification generated from Bruno collection: auth-test-collection'
+paths:
+  /protected:
+    get:
+      summary: Request with Basic Auth
+      description: Operation for Request with Basic Auth
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Default response schema
+        '400':
+          description: Bad Request - The request was invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '401':
+          description: Unauthorized - Authentication required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '404':
+          description: Not Found - The requested resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+      security:
+        - basicAuth: []
+  /api/data:
+    get:
+      summary: Request with Bearer Auth
+      description: Operation for Request with Bearer Auth
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Default response schema
+        '400':
+          description: Bad Request - The request was invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '401':
+          description: Unauthorized - Authentication required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '404':
+          description: Not Found - The requested resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+      security:
+        - bearerAuth: []

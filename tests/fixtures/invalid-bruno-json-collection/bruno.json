@@ -1,0 +1,5 @@
+{
+  "name": "Invalid Collection",
+  "version": "1",
+  "type": "collection"
+  // This is intentionally invalid JSON - missing closing brace

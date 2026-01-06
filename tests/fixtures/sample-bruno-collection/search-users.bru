@@ -1,0 +1,22 @@
+meta {
+  name: Search Users
+  type: http
+  seq: 10
+}
+
+get {
+  url: https://api.example.com/users/search
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+params {
+  q: john
+  status: active
+  sort: name
+  order: asc
+}
+
