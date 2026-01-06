@@ -1,0 +1,23 @@
+meta {
+  name: Update User
+  type: http
+  seq: 3
+}
+
+put {
+  url: https://api.example.com/users/123
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "age": 30
+  }
+}
+

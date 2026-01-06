@@ -1,11 +1,11 @@
 meta {
-  name: Get Users
+  name: Get User By ID
   type: http
-  seq: 1
+  seq: 11
 }
 
 get {
-  url: https://api.example.com/users
+  url: https://api.example.com/users/{{userId}}
 }
 
 headers {
@@ -13,7 +13,3 @@ headers {
   Authorization: Bearer {{token}}
 }
 
-params {
-  limit: 10
-  offset: 0
-}

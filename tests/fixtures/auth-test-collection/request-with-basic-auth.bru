@@ -1,0 +1,16 @@
+meta {
+  name: Request with Basic Auth
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://api.example.com/protected
+}
+
+auth {
+  mode: basic
+  username: admin
+  password: secret123
+}
+

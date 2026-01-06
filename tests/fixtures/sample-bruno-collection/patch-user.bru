@@ -1,0 +1,21 @@
+meta {
+  name: Patch User
+  type: http
+  seq: 4
+}
+
+patch {
+  url: https://api.example.com/users/123
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "email": "newemail@example.com"
+  }
+}
+

@@ -1,0 +1,19 @@
+meta {
+  name: Upload File
+  type: http
+  seq: 9
+}
+
+post {
+  url: https://api.example.com/upload
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:multipart-form {
+  file: @/path/to/file.pdf
+  description: User profile picture
+}
+

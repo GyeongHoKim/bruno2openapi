@@ -1,0 +1,19 @@
+meta {
+  name: Send Message
+  type: http
+  seq: 12
+}
+
+post {
+  url: https://api.example.com/messages
+}
+
+headers {
+  Content-Type: application/json
+  Authorization: Bearer {{token}}
+}
+
+body:text {
+  This is a plain text message body
+}
+

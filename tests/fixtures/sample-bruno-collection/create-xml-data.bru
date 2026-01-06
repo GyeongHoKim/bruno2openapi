@@ -1,0 +1,23 @@
+meta {
+  name: Create XML Data
+  type: http
+  seq: 13
+}
+
+post {
+  url: https://api.example.com/data
+}
+
+headers {
+  Content-Type: application/xml
+  Authorization: Bearer {{token}}
+}
+
+body:xml {
+  <user>
+    <name>John Doe</name>
+    <email>john@example.com</email>
+    <age>25</age>
+  </user>
+}
+

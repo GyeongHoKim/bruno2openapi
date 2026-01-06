@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: Collection with .bru file
+  version: '1'
+  description: >-
+    OpenAPI specification generated from Bruno collection: Collection with .bru
+    file
+paths:
+  /simple:
+    get:
+      summary: Simple Request
+      description: Operation for Simple Request
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Default response schema
+        '400':
+          description: Bad Request - The request was invalid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '401':
+          description: Unauthorized - Authentication required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '404':
+          description: Not Found - The requested resource does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
