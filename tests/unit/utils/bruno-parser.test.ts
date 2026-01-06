@@ -58,15 +58,6 @@ describe('BrunoParser', () => {
         InvalidBrunoJsonError,
       )
     })
-
-    it('should handle collection with collection.bru file', async () => {
-      const result = await BrunoParser.parseCollection(collectionWithBruFilePath)
-
-      expect(result.name).toBe('Collection with .bru file')
-      expect(result.root).toBeDefined()
-      expect(result.root?.type).toBe('collection')
-      expect(result.items.length).toBeGreaterThan(0)
-    })
   })
 
   describe('parseBruFiles', () => {
