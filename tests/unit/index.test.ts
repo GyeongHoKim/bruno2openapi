@@ -70,9 +70,9 @@ function validateParameter(param: unknown, expectedName: string): void {
   expect(typeof param).toBe('object')
 
   expect(isRecord(param)).toBe(true)
-    if (!isRecord(param)) return
+  if (!isRecord(param)) return
 
-    expect(param).toHaveProperty('name', expectedName)
+  expect(param).toHaveProperty('name', expectedName)
   expect(typeof param.name).toBe('string')
   expect(param).toHaveProperty('in')
   expect(['query', 'header', 'path', 'cookie']).toContain(param.in)
