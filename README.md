@@ -25,7 +25,7 @@ async function convertCollection() {
   const result = await convertBrunoCollectionToOpenAPI('./path-to-your-bruno-collection-directory');
 
   // Save as JSON file
-  fs.writeFileSync('openapi-spec.json', JSON.stringify(result.openapi, null, 2));
+  fs.writeFileSync('openapi-spec.json', JSON.stringify(result.spec, null, 2));
   console.log('OpenAPI specification saved as openapi-spec.json');
 }
 
@@ -50,7 +50,45 @@ async function convertCollection() {
   const result = await convertBrunoCollectionToOpenAPI('./path-to-your-bruno-collection-directory');
 
   // Convert to YAML and save
-  const yamlString = yaml.dump(result.openapi, { indent: 2 });
+  const yamlString = yaml.dump(result.spec, { indent: 2 });
+  fs.writeFileSync('openapi-spec.yaml', yamlString);
+  console.log('OpenAPI specification saved as openapi-spec.yaml');
+}
+
+convertCollection();
+```
+
+### JSON Export (Sync)
+
+```javascript
+import { convertBrunoCollectionToOpenAPISync } from '@gyeonghokim/bruno-to-openapi';
+import fs from 'fs';
+
+function convertCollection() {
+  // Convert Bruno collection directory to OpenAPI specification synchronously
+  const result = convertBrunoCollectionToOpenAPISync('./path-to-your-bruno-collection-directory');
+
+  // Save as JSON file
+  fs.writeFileSync('openapi-spec.json', JSON.stringify(result.spec, null, 2));
+  console.log('OpenAPI specification saved as openapi-spec.json');
+}
+
+convertCollection();
+```
+
+### YAML Export (Sync)
+
+```javascript
+import { convertBrunoCollectionToOpenAPISync } from '@gyeonghokim/bruno-to-openapi';
+import yaml from 'js-yaml';
+import fs from 'fs';
+
+function convertCollection() {
+  // Convert Bruno collection directory to OpenAPI specification synchronously
+  const result = convertBrunoCollectionToOpenAPISync('./path-to-your-bruno-collection-directory');
+
+  // Convert to YAML and save
+  const yamlString = yaml.dump(result.spec, { indent: 2 });
   fs.writeFileSync('openapi-spec.yaml', yamlString);
   console.log('OpenAPI specification saved as openapi-spec.yaml');
 }
@@ -74,7 +112,7 @@ convertCollection();
 The library exports the following functions:
 
 - `convertBrunoCollectionToOpenAPI(collectionPath)`: Asynchronously takes a Bruno collection directory path and returns a Promise resolving to the conversion result containing the OpenAPI specification.
-- `convertBrunoCollectionToAPISync(collectionPath)`: Synchronously takes a Bruno collection directory path and returns the conversion result containing the OpenAPI specification (Note: The full synchronous implementation has limitations and it's recommended to use the async version).
+- `convertBrunoCollectionToOpenAPISync(collectionPath)`: Synchronously takes a Bruno collection directory path and returns the conversion result containing the OpenAPI specification (Note: The full synchronous implementation has limitations and it's recommended to use the async version).
 - `isValidBrunoCollection(collectionPath)`: Asynchronously validates if a given path contains a valid Bruno collection and returns a Promise resolving to true if valid.
 
 ## Contributing
