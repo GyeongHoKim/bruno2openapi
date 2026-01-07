@@ -21,8 +21,7 @@ export class InvalidCollectionPathError extends Error {
  */
 export class InvalidJsonError extends Error {
   constructor(filePath: string, parseError: unknown) {
-    const message =
-      parseError instanceof Error ? parseError.message : 'Unknown error'
+    const message = parseError instanceof Error ? parseError.message : 'Unknown error'
     super(`Invalid JSON in ${filePath}: ${message}`)
     this.name = 'InvalidJsonError'
     if (Error.captureStackTrace) {
@@ -57,4 +56,3 @@ export class BruFileParseError extends Error {
     }
   }
 }
-

@@ -491,38 +491,33 @@ export class OpenApiGenerator {
    * Infers a schema from a JavaScript value
    */
   static inferSchemaFromValue(value: unknown): SchemaObject {
-    const schema: SchemaObject = {
-      type: typeof value as
-        | 'string'
-        | 'number'
-        | 'boolean'
-        | 'object'
-        | 'null'
-        | 'undefined'
-        | 'symbol'
-        | 'function',
-    }
-
+    // Handle null values - use nullable instead of type: 'null'
     if (value === null) {
-      schema.type = 'null'
-      return schema
+      return { type: 'object', nullable: true }
     }
 
+    // Handle arrays - must use ArraySchemaObject type
     if (Array.isArray(value)) {
-      schema.type = 'array'
       if (value.length > 0) {
         // Use the first element to infer item schema
-        schema.items = OpenApiGenerator.inferSchemaFromValue(value[0])
-      } else {
-        // For empty arrays, provide a generic item schema
-        schema.items = { type: 'object' }
+        return {
+          type: 'array',
+          items: OpenApiGenerator.inferSchemaFromValue(value[0]),
+        }
       }
-      return schema
+      // For empty arrays, provide a generic item schema
+      return {
+        type: 'array',
+        items: { type: 'object' },
+      }
     }
 
+    // Handle objects
     if (typeof value === 'object' && value !== null) {
-      schema.type = 'object'
-      schema.properties = {}
+      const schema: SchemaObject = {
+        type: 'object',
+        properties: {},
+      }
 
       // Use for...of to avoid forEach and non-null assertion
       for (const [key, propertyValue] of Object.entries(value)) {
@@ -535,8 +530,25 @@ export class OpenApiGenerator {
       return schema
     }
 
-    // For primitive types, just return the basic schema
-    return schema
+    // For primitive types, map JavaScript types to OpenAPI types
+    const jsType = typeof value
+    if (jsType === 'string') {
+      return { type: 'string' }
+    }
+    if (jsType === 'number') {
+      // Check if it's an integer
+      if (Number.isInteger(value)) {
+        return { type: 'integer' }
+      }
+      return { type: 'number' }
+    }
+    if (jsType === 'boolean') {
+      return { type: 'boolean' }
+    }
+
+    // For other types (undefined, symbol, function), default to string
+    // For other types (undefined, symbol, function), default to string
+    return { type: 'string' }
   }
 
   /**

@@ -61,8 +61,6 @@ export class BrunoCollectionModel implements BrunoCollection {
    * Generates a unique identifier
    */
   private generateUid(): string {
-    // In a real implementation, you might want to use nanoid or similar
-    // For now, we'll create a simple UID based on timestamp and random number
-    return Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
+    return crypto.randomUUID()
   }
 }
