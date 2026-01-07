@@ -1,7 +1,35 @@
 import SwaggerParser from '@apidevtools/swagger-parser'
+import type { OpenAPI } from 'openapi-types'
 import { describe, expect, it } from 'vitest'
 import { ConversionService } from '../../../src/services/conversion-service.js'
 import type { BrunoCollection } from '../../../src/types/bruno.js'
+import type { OpenAPIObject } from '../../../src/types/openapi.js'
+
+/**
+ * Converts OpenAPIObject to OpenAPI.Document format for SwaggerParser
+ * Since OpenAPIObject is now a type alias for OpenAPIV3.Document,
+ * and OpenAPI.Document is a union type that includes OpenAPIV3.Document,
+ * we can safely return the spec directly after validation
+ */
+function toOpenAPIDocument(spec: OpenAPIObject): OpenAPI.Document {
+  // Validate basic structure
+  if (
+    typeof spec !== 'object' ||
+    spec === null ||
+    !('openapi' in spec) ||
+    !('info' in spec) ||
+    !('paths' in spec) ||
+    typeof spec.openapi !== 'string' ||
+    typeof spec.info !== 'object' ||
+    spec.info === null ||
+    typeof spec.paths !== 'object' ||
+    spec.paths === null
+  ) {
+    throw new Error('Invalid OpenAPI specification structure')
+  }
+  // OpenAPIObject is OpenAPIV3.Document, which is compatible with OpenAPI.Document
+  return spec
+}
 
 describe('ConversionService', () => {
   const service = new ConversionService()
@@ -39,8 +67,7 @@ describe('ConversionService', () => {
 
       // Validate the spec with external library
       try {
-        // biome-ignore lint/suspicious/noExplicitAny: External library type incompatibility
-        await SwaggerParser.validate(result.spec as any)
+        await SwaggerParser.validate(toOpenAPIDocument(result.spec))
         expect(true).toBe(true) // If validation doesn't throw, it's valid
       } catch (error) {
         console.error('OpenAPI validation failed:', error)

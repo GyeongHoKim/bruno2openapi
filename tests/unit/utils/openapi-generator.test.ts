@@ -58,7 +58,8 @@ describe('OpenApiGenerator', () => {
       const value = 42
       const schema = OpenApiGenerator.inferSchemaFromValue(value)
 
-      expect(schema.type).toBe('number')
+      // OpenAPI 3.0 distinguishes between integer and number
+      expect(schema.type).toBe('integer')
     })
 
     it('should infer schema for boolean value', () => {
@@ -72,7 +73,9 @@ describe('OpenApiGenerator', () => {
       const value = null
       const schema = OpenApiGenerator.inferSchemaFromValue(value)
 
-      expect(schema.type).toBe('null')
+      // OpenAPI 3.0 uses nullable: true instead of type: 'null'
+      expect(schema.type).toBe('object')
+      expect('nullable' in schema && schema.nullable).toBe(true)
     })
 
     it('should infer schema for array value', () => {
@@ -80,8 +83,14 @@ describe('OpenApiGenerator', () => {
       const schema = OpenApiGenerator.inferSchemaFromValue(value)
 
       expect(schema.type).toBe('array')
-      expect(schema.items).toBeDefined()
-      expect((schema.items as { type: string }).type).toBe('number')
+      // SchemaObject is a union type, so we need to check if it's an ArraySchemaObject
+      if (schema.type === 'array' && 'items' in schema) {
+        expect(schema.items).toBeDefined()
+        // OpenAPI 3.0 distinguishes between integer and number
+        expect((schema.items as { type: string }).type).toBe('integer')
+      } else {
+        throw new Error('Expected array schema with items')
+      }
     })
 
     it('should infer schema for object value', () => {
@@ -92,7 +101,8 @@ describe('OpenApiGenerator', () => {
       expect(schema.properties).toBeDefined()
       const properties = schema.properties as { [key: string]: { type: string } } | undefined
       expect(properties?.name?.type).toBe('string')
-      expect(properties?.count?.type).toBe('number')
+      // OpenAPI 3.0 distinguishes between integer and number
+      expect(properties?.count?.type).toBe('integer')
     })
   })
 
